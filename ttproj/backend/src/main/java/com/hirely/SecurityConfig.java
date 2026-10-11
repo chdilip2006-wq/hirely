@@ -51,7 +51,9 @@ public class SecurityConfig {
         csrfTokens.setCookieCustomizer(cookie -> cookie.secure(secureCookies).sameSite("Lax"));
         http.cors(c -> {}).csrf(c -> c.csrfTokenRepository(csrfTokens).csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler()))
             .authorizeHttpRequests(a -> a.requestMatchers("/api/auth/**", "/api/csrf", "/api/health", "/actuator/health", "/api/jobs", "/api/jobs/**").permitAll()
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated())
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/api/**").authenticated()
+                .anyRequest().permitAll())
             .formLogin(f -> f.disable()).httpBasic(b -> b.disable()).logout(l -> l.logoutUrl("/api/auth/logout").logoutSuccessHandler((req,res,auth)->res.setStatus(204)));
         return http.build();
     }
