@@ -4,24 +4,36 @@ services:
     name: hirely
     runtime: docker
     plan: free
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
+
+    dockerfilePath: ./ttproj/Dockerfile
+    dockerContext: ./ttproj
+
     healthCheckPath: /api/health
+
     envVars:
       - key: MONGODB_URI
         sync: false
+
       - key: MONGODB_DATABASE
         value: hirely
+
       - key: APP_STORAGE_DIR
         value: /tmp/hirely/uploads
+
       - key: APP_SESSION_COOKIE_SECURE
         value: "true"
+
       - key: APP_CORS_ORIGIN
         fromService:
           type: web
           name: hirely
           envVarKey: RENDER_EXTERNAL_URL
+
       - key: APP_ADMIN_EMAIL
         sync: false
+
       - key: APP_ADMIN_PASSWORD
         sync: false
+
+      - key: SERVER_PORT
+        value: "10000"
