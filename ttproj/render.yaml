@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: hirely
+    runtime: docker
+    plan: 0.5c-512mb
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    disk:
+      name: hirely-uploads
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DATABASE
+        value: hirely
+      - key: APP_STORAGE_DIR
+        value: /var/data/uploads
+      - key: APP_SESSION_COOKIE_SECURE
+        value: "true"
+      - key: APP_CORS_ORIGIN
+        fromService:
+          type: web
+          name: hirely
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: APP_ADMIN_EMAIL
+        sync: false
+      - key: APP_ADMIN_PASSWORD
+        sync: false

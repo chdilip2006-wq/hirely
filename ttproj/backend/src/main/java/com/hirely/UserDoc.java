@@ -1,0 +1,18 @@
+package com.hirely;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.Instant;
+
+@Document("users")
+public class UserDoc {
+    @Id public String id;
+    public String fullName;
+    @Indexed(unique=true) public String email;
+    public String phone;
+    public String passwordHash;
+    public String recoveryCodeHash;
+    public String role;
+    public boolean active=true;
+    public Instant createdAt=Instant.now();
+}

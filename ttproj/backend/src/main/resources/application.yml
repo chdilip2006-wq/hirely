@@ -1,0 +1,31 @@
+server:
+  port: ${PORT:8080}
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: ${APP_SESSION_COOKIE_SECURE:false}
+        same-site: lax
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/hirely}
+      database: ${MONGODB_DATABASE:hirely}
+      auto-index-creation: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+app:
+  cors-origin: ${APP_CORS_ORIGIN:http://localhost:5173}
+  storage-dir: ${APP_STORAGE_DIR:./private-uploads}
+  admin:
+    email: ${APP_ADMIN_EMAIL:}
+    password: ${APP_ADMIN_PASSWORD:}
