@@ -5,8 +5,9 @@ services:
     runtime: docker
     plan: free
 
-    dockerfilePath: ./ttproj/Dockerfile
-    dockerContext: ./ttproj
+    rootDir: ttproj
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
 
     healthCheckPath: /api/health
 
